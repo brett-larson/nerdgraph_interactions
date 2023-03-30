@@ -22,7 +22,7 @@ class APMQueryHandler:
         graphql_query = """
             query ($entity_search_query: String!) {
               actor {
-                entitySearch(query: $entity_search_query, options: {limit: 10}) {
+                entitySearch(query: $entity_search_query) {
                   results {
                     nextCursor
                     entities {
