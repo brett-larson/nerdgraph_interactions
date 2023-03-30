@@ -12,4 +12,6 @@ The following packages are required to run this code:
 - dotenv
 
 ## .env
-This project is set up to leverage a `.env` file for storing your New Relic User API Key and account number. 
+This project is set up to leverage a `.env` file for storing your New Relic User API Key and account number, which are represented by the following variables:
+- NEW_RELIC_API_KEY
+- ACCOUNT_ID
