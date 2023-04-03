@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()  # Load environment variables from .env file
 
 
-class EntityCollection:
+class EntityCollector:
     """
     This class contains the methods to get a list of entity names and GUId's for a given account. The get_entities
     method is the primary method called.

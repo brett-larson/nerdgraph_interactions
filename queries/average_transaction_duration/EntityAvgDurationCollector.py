@@ -5,16 +5,17 @@ import json
 import logging
 import os
 from time import sleep
-import requests
 from dotenv import load_dotenv
 
-load_dotenv()   # Load environment variables from .env file
+load_dotenv()  # Load environment variables from .env file
 
 
-class NerdGraphClient:
+class EntityAvgDurationCollector:
     """
-    This class is used to execute GraphQL queries against the New Relic API.
+    This class contains the methods to get the average transaction duration for a given entity. The
+    get_average_transaction_duration method is the primary method called.
     """
+
     def __init__(self):
         """
         This is the constructor for the NerdGraphClient class.
@@ -22,42 +23,20 @@ class NerdGraphClient:
         self.api_key = os.getenv("NEW_RELIC_API_KEY")
         self.url = "https://api.newrelic.com/graphql"
         self.account_id = os.getenv("NEW_RELIC_ACCOUNT_ID")
-        self.entities = []  # This will be a list of dictionaries containing entity names and GUIDs
 
-    def get_entities(self):
+    def get_average_entity_duration(self, entity_list, nerdgraph_client):
         """
         This function returns a list of entities for a given account.
         :return: A list of entities.
         """
 
-        query, variables = self.build_queries()
+        for entity in entity_list:
+            query, variables = self.build_query(entity["guid"])
+            response = nerdgraph_client.send_query(query, variables)
+            average_duration = response["data"]["actor"]["nrql"]["results"][0]["average.duration"]
+            entity["average_duration"] = average_duration
 
-        response = self._send_query(query, variables)
-
-        next_cursor = self._process_response(response)
-
-        while next_cursor:
-            query, variables = self.build_queries(next_cursor)
-            response = self._send_query(query, variables)
-            next_cursor = self._process_response(response)
-            sleep(0.5)
-
-        return self.entities
-
-    def _process_response(self, response):
-        """
-        This private function processes the response from the API request.
-        :param response: The JSON response from the API request.
-        :return: The JSON response from the API request.
-        """
-
-        next_cursor = response["data"]["actor"]["entitySearch"]["results"]["nextCursor"]
-        entities = response["data"]["actor"]["entitySearch"]["results"]["entities"]
-
-        for entity in entities:
-            self.entities.append(entity)
-
-        return next_cursor
+        return entity_list
 
     def build_query(self, entity_guid):
         """

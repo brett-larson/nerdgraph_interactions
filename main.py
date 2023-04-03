@@ -4,6 +4,7 @@
 
 import logging
 import queries.entity_names_guids.get_entity_names_guids as get_entities
+import queries.average_transaction_duration.get_entity_average_transaction_duration as get_average_duration
 
 # Configure logging
 logging.basicConfig(
@@ -24,6 +25,9 @@ def main():
     logging.info("Starting the NerdGraph Interactions application.")
 
     entities = get_entities.get_entity_names_guids()
+
+    entities = get_average_duration.get_entity_average_transaction_duration(entities)
+
     print(entities)
 
     logging.info("Finished the NerdGraph Interactions application.")
