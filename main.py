@@ -3,8 +3,7 @@
 """
 
 import logging
-from time import sleep
-import NerdGraphClient
+import queries.entity_names_guids.get_entity_names_guids as get_entities
 
 # Configure logging
 logging.basicConfig(
@@ -22,12 +21,12 @@ def main():
     :return: No data returned.
     """
 
-    logging.info("Starting the application.")
+    logging.info("Starting the NerdGraph Interactions application.")
 
-    nerdgraph_client = NerdGraphClient.NerdGraphClient()
+    entities = get_entities.get_entity_names_guids()
+    print(entities)
 
-    entity_list = nerdgraph_client.get_entities()
-    print(entity_list)
+    logging.info("Finished the NerdGraph Interactions application.")
 
 
 if __name__ == '__main__':
