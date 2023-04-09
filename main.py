@@ -3,6 +3,7 @@
 """
 
 import logging
+import shared.CsvFileHandler as CsvFileHandler
 import queries.entity_names_guids.get_entity_names_guids as get_entities
 import queries.average_transaction_duration.get_entity_average_transaction_duration as get_average_duration
 
