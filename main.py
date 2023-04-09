@@ -3,6 +3,7 @@
 """
 
 import logging
+import shared.CsvFileHandler as CsvFileHandler
 import queries.entity_names_guids.get_entity_names_guids as get_entities
 import queries.average_transaction_duration.get_entity_average_transaction_duration as get_average_duration
 
@@ -29,6 +30,9 @@ def main():
     entities = get_average_duration.get_entity_average_transaction_duration(entities)
 
     print(entities)
+
+    csv_writer = CsvFileHandler.CsvFileHandler("output.csv")
+    csv_writer.write_csv(entities, as_dict=True)
 
     logging.info("Finished the NerdGraph Interactions application.")
 

@@ -4,7 +4,7 @@
 
 import json
 import logging
-import NerdGraphClient
+import shared.NerdGraphClient as NerdGraphClient
 from queries.entity_names_guids import EntityCollector
 
 

@@ -133,3 +133,6 @@ dmypy.json
 
 # DS Store files created by Mac
 .DS_Store
+
+# CSV files
+*.csv

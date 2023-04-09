@@ -4,7 +4,7 @@
 
 import json
 import logging
-import NerdGraphClient
+import shared.NerdGraphClient as NerdGraphClient
 from queries.average_transaction_duration import EntityAvgDurationCollector
 
 
