@@ -1,0 +1,4 @@
+The csv_files folder is designed to hold the csv files that are created or read by the script.
+The script will create a csv file for each of the 3 data sources.
+The csv files are named based on the data source and the date that the script was run.
+The csv files are created in the csv_files folder.
