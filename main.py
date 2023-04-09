@@ -31,6 +31,9 @@ def main():
 
     print(entities)
 
+    csv_writer = CsvFileHandler.CsvFileHandler("output.csv")
+    csv_writer.write_csv(entities, as_dict=True)
+
     logging.info("Finished the NerdGraph Interactions application.")
 
 
