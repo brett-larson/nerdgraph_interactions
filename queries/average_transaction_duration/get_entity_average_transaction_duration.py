@@ -6,8 +6,10 @@ import json
 import logging
 import shared.NerdGraphClient as NerdGraphClient
 from queries.average_transaction_duration import EntityAvgDurationCollector
+import newrelic.agent
 
 
+@newrelic.agent.background_task()
 def get_entity_average_transaction_duration(entity_list):
     """
     This is the main method for the application. Primary variables and control flow are here.

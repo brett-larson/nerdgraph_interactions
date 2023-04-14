@@ -21,6 +21,7 @@ class CsvFileHandler:
         self.csv_directory = 'csv_files'
         self.csv_files_directory = os.path.join(self.parent_directory, self.csv_directory, self.file_name)
 
+    @newrelic.agent.background_task(name="read_file", group="Task")
     def read_file(self):
         """
         Read the csv file.
@@ -37,7 +38,7 @@ class CsvFileHandler:
 
         return list(csv_reader)
 
-    @newrelic.agent.background_task()
+    @newrelic.agent.background_task(name="write_csv", group="Task")
     def write_csv(self, data, as_dict=False):
         """
         Write the csv file. The data can be a list of dictionaries or a list.
@@ -76,6 +77,7 @@ class CsvFileHandler:
             logging.error(e)
             sys.exit()
 
+    @newrelic.agent.background_task(name="append_file", group="Task")
     def append_file(self, data):
         """
         Append the csv file.
@@ -91,6 +93,7 @@ class CsvFileHandler:
             logging.error(f"File not found: {self.file_name}. Exiting the application.")
             sys.exit()
 
+    @newrelic.agent.background_task(name="delete_file", group="Task")
     def delete_file(self):
         """
         Delete the csv file.

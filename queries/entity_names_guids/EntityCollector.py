@@ -6,6 +6,7 @@ import logging
 import os
 from time import sleep
 from dotenv import load_dotenv
+import newrelic.agent
 
 load_dotenv()  # Load environment variables from .env file
 
@@ -26,6 +27,7 @@ class EntityCollector:
         self.account_id = os.getenv("NEW_RELIC_ACCOUNT_ID")
         self.entities = []  # This will be a list of dictionaries containing entity names and GUIDs
 
+    @newrelic.agent.background_task()
     def _build_queries(self, cursor=None):
         """
         This private function returns the query to get a list of APM entities for a given account. There are two
@@ -87,6 +89,7 @@ class EntityCollector:
 
         return graphql_query, query_variables
 
+    @newrelic.agent.background_task()
     def get_entities(self, nerdgraph_client):
         """
         This method is the primary method called to get a list of entity names and GUIDs for a given account.
@@ -109,6 +112,7 @@ class EntityCollector:
 
         return self.entities
 
+    @newrelic.agent.background_task()
     def _process_response(self, response):
         """
         This private function processes the response from the API request. This includes getting the next cursor,

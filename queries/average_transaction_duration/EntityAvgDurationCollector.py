@@ -5,6 +5,8 @@ import json
 import logging
 import os
 from time import sleep
+
+import newrelic.agent
 from dotenv import load_dotenv
 
 load_dotenv()  # Load environment variables from .env file
@@ -24,6 +26,7 @@ class EntityAvgDurationCollector:
         self.url = "https://api.newrelic.com/graphql"
         self.account_id = os.getenv("NEW_RELIC_ACCOUNT_ID")
 
+    @newrelic.agent.background_task()
     def get_average_entity_duration(self, entity_list, nerdgraph_client):
         """
         This function returns a list of entities for a given account.
@@ -38,6 +41,7 @@ class EntityAvgDurationCollector:
 
         return entity_list
 
+    @newrelic.agent.background_task()
     def build_query(self, entity_guid):
         """
         This function returns the query to get the average transaction time for a given APM entity.
