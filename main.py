@@ -7,6 +7,9 @@ import shared.CsvFileHandler as CsvFileHandler
 import queries.entity_names_guids.get_entity_names_guids as get_entities
 import queries.average_transaction_duration.get_entity_average_transaction_duration as get_average_duration
 
+import newrelic.agent
+newrelic.agent.initialize('newrelic.ini')
+
 # Configure logging
 logging.basicConfig(
     filename="application.log",
@@ -17,6 +20,7 @@ logging.basicConfig(
 )
 
 
+@newrelic.agent.background_task()
 def main():
     """
     This is the main method for the application. Primary variables and control flow are here.

@@ -7,6 +7,8 @@ import logging
 import os
 import sys
 
+import newrelic.agent
+
 
 class CsvFileHandler:
     """ This class handles the csv file. """
@@ -35,6 +37,7 @@ class CsvFileHandler:
 
         return list(csv_reader)
 
+    @newrelic.agent.background_task()
     def write_csv(self, data, as_dict=False):
         """
         Write the csv file. The data can be a list of dictionaries or a list.
