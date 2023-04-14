@@ -6,6 +6,7 @@ import logging
 import os
 import requests
 from dotenv import load_dotenv
+import newrelic.agent
 
 load_dotenv()  # Load environment variables from .env file
 
@@ -23,6 +24,7 @@ class NerdGraphClient:
         self.url = "https://api.newrelic.com/graphql"
         self.account_id = os.getenv("NEW_RELIC_ACCOUNT_ID")
 
+    @newrelic.agent.background_task()
     def _build_headers(self):
         """
         This private function builds the headers for the API request.
@@ -34,6 +36,7 @@ class NerdGraphClient:
             "API-Key": self.api_key
         }
 
+    @newrelic.agent.background_task()
     def send_query(self, query, variables=None):
         """
         This private function executes a GraphQL query against the New Relic API. Variables can be passed to the query.

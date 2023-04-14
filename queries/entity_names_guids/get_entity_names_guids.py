@@ -6,8 +6,10 @@ import json
 import logging
 import shared.NerdGraphClient as NerdGraphClient
 from queries.entity_names_guids import EntityCollector
+import newrelic.agent
 
 
+@newrelic.agent.background_task()
 def get_entity_names_guids():
     """
     This is the main method for the application. Primary variables and control flow are here.
